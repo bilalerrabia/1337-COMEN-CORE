@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-char *strdup(char *str)
+char *ft_strdup(const char *str)
 {
     int i;
     char *res;

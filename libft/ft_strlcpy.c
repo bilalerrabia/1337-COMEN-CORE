@@ -1,7 +1,9 @@
-int  ft_strlcpy(char *dst, char *src, int dsize)
+#include <stddef.h>
+
+size_t  ft_strlcpy(char *dst, const char *src, size_t dsize)
 {
-    int j;
-    int src_len;
+    size_t j;
+    size_t src_len;
 
     src_len = 0;
     j = 0;

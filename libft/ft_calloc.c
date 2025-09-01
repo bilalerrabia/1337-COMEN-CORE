@@ -1,5 +1,19 @@
 #include <stdlib.h>
-void *calloc(int nmemb, int size)
+#include <stddef.h>
+
+void *ft_calloc(size_t nmemb, size_t size)
 {
-    return (malloc(nmemb * size));
+    size_t i;
+    size_t total;
+    unsigned char *ptr;
+
+    total = nmemb * size;
+    ptr = malloc(total);
+    i = 0;
+    while (i < total)
+    {
+        ptr[i] = 0;
+        i++;
+    }
+    return (void *)ptr;
 }

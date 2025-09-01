@@ -1,32 +1,29 @@
-static int ft_strlen(char *str)
-{
-    int i;
+#include <stddef.h>
 
-    i = 0;
-    while(str[i])
+static size_t ft_strlen(char *str)
+{
+    size_t i = 0;
+    while (str[i])
         i++;
-    return (i);
+    return i;
 }
 
-int  ft_strlcat(char *dst, char *src, int dsize)
+size_t ft_strlcat(char *dst, const char *src, size_t dsize)
 {
-    int i;
-    int j;
-    int dst_len;
-    int src_len;
+    size_t dst_len = ft_strlen(dst);
+    size_t src_len = ft_strlen(src);
+    size_t i;
+
+    if (dst_len >= dsize)
+        return dsize + src_len;
 
     i = 0;
-    j = 0;
-    dst_len = ft_strlen(dst);
-    src_len = ft_strlen(src);
-    if (i == dsize)
-        return (dsize + src_len);
-    while (i < dsize - 1 && src[j])
+    while (src[i] && dst_len + i < dsize - 1)
     {
-        dst[i] = src[j];
+        dst[dst_len + i] = src[i];
         i++;
-        j++;
     }
-    dst[i] = '\0';
-    return (dst_len + src_len);
+    dst[dst_len + i] = '\0';
+
+    return dst_len + src_len;
 }

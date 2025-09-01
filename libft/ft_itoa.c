@@ -2,18 +2,14 @@
 
 static void my_rev(char *str)
 {
-    int tmp;
-    int end;
-    int i;
+    int tmp, i = 0, end = 0;
 
-    end = 0;
-    i = 0;
-    if(str[0] == '-')
+    if (str[0] == '-')
         i++;
-    while(str[end])
+    while (str[end])
         end++;
     end--;
-    while(i < end)
+    while (i < end)
     {
         tmp = str[i];
         str[i] = str[end];
@@ -23,37 +19,38 @@ static void my_rev(char *str)
     }
 }
 
-static char *return_zero(char *str)
-{
-    str[0] = '0';
-    str[1] = '\0';
-    return (str);
-}
-
 char *ft_itoa(int n)
 {
-    int i;
-    char *str;
+    char *str = malloc(12);
+    int i = 0;
+    long num = n;
 
-    str = malloc(13);
-    i = 0;
-    if (n == 0)
-        return (return_zero(str));
-    if(n < 0)
+    if (!str)
+        return (NULL);
+
+    if (num == 0)
+    {
+        str[i++] = '0';
+        str[i] = '\0';
+        return (str);
+    }
+
+    if (num < 0)
     {
         str[i++] = '-';
-        n = -n;
+        num = -num;
     }
-    while (n > 0)
+
+    while (num > 0)
     {
-        str[i] = (n % 10) + '0';
-        n /= 10;
-        i++;
+        str[i++] = (num % 10) + '0';
+        num /= 10;
     }
     str[i] = '\0';
     my_rev(str);
     return (str);
 }
+
 // #include <stdio.h>
 // int main()
 // {
