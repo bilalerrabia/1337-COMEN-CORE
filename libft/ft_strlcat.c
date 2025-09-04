@@ -1,6 +1,6 @@
 #include <stddef.h>
 
-static size_t ft_strlen(char *str)
+static size_t ft_strlen(const char *str)
 {
     size_t i = 0;
     while (str[i])
@@ -10,10 +10,12 @@ static size_t ft_strlen(char *str)
 
 size_t ft_strlcat(char *dst, const char *src, size_t dsize)
 {
-    size_t dst_len = ft_strlen(dst);
-    size_t src_len = ft_strlen(src);
+    size_t dst_len;
+    size_t src_len;
     size_t i;
 
+    dst_len = ft_strlen(dst);
+    src_len = ft_strlen(src);
     if (dst_len >= dsize)
         return dsize + src_len;
 
