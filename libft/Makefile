@@ -1,27 +1,28 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror -I
+CFLAGS = -Wall -Wextra -Werror -I bonus
 NAME = libft.a
-SRCS = ft_alpha.c ...
-OBJS = ft_alpha.o ...
-BONUS_OBJS = ft_lstsize.c ...
+SRCS = $(wildcard ft_*.c)
+OBJS = $(SRCS:.c=.o)
 
-all:
-	...
-	ar src $(NAME) $(OBJS)
+BONUS_SRCS = $(wildcard bonus/ft_*.c)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
+all: $(NAME)
 
-bonus:
-	...
-	ar scr $(NAME) $(BONUS_OBJS)
+$(NAME) : $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
+bonus:	$(OBJS) $(BONUS_OBJS)
+	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o bonus_part/*.o
-
+	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	rm -f libft.a
-
+	rm -f $(NAME)
 
 re: fclean all
 
