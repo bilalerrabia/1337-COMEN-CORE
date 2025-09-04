@@ -1,6 +1,7 @@
 #ifndef B_LIBFT_H
 # define B_LIBFT_H
 
+#include <stdlib.h>
 typedef struct s_list
 {
 void *content;
