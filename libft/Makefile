@@ -1,10 +1,10 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I bonus_part
+CFLAGS = -Wall -Wextra -Werror -I _bonus
 NAME = libft.a
 SRCS = $(wildcard ft_*.c)
 OBJS = $(SRCS:.c=.o)
 
-BONUS_SRCS = $(wildcard bonus_part/*.c)
+BONUS_SRCS = $(wildcard _bonus/*.c)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
@@ -12,8 +12,8 @@ all: $(NAME)
 $(NAME) : $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
 
-bonus: $(BONUS_OBJS) $(OBJS)
-	@ar rcs $(NAME) $(BONUS_OBJS) $(OBJS)
+bonus: $(BONUS_OBJS)
+	@ar rcs $(NAME) $(BONUS_OBJS)
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

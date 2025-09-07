@@ -24,9 +24,8 @@ char *ft_strchr(const char *str, int c);
 int ft_tolower(int c);
 int ft_toupper(int c);
 char *ft_strrchr(const char *str, int c);
-
-// char *ft_memmove(char *dest, char *src, int n);
-// char *ft_strnstr(const char *big, const char *little, int len);
+char *ft_memmove(char *dest, const char *src, int n);
+char *ft_strnstr(const char *big, const char *little, size_t len);
 
 // part 2:
 
@@ -37,9 +36,9 @@ void ft_putstr_fd(char *s, int fd);
 void ft_putendl_fd(char *s, int fd);
 char *ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void ft_striteri(char *s, void (*f)(unsigned int,char*));
+char *ft_substr(char const *s, unsigned int start, size_t len);
+char *ft_strtrim(char const *s1, char const *set);
+void ft_putnbr_fd(int n, int fd);
+char **ft_split(char const *s, char c);
 
-// char *ft_substr(char const *s, unsigned int start, int len);
-// char *ft_strtrim(char const *s1, char const *set);
-// char **ft_split(char const *s, char c);
-// void ft_putnbr_fd(int n, int fd);
 #endif
