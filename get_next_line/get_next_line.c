@@ -81,18 +81,18 @@ char *get_next_line(int fd)
     remainder = keep_next_line(remainder);
     return (line);
 }
-#include <stdio.h>
+// #include <stdio.h>
 
-int main(void)
-{
-    int fd = open("f.txt", O_RDONLY);
-    char *line;
+// int main(void)
+// {
+//     int fd = open("f.txt", O_RDONLY);
+//     char *line;
 
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-    return 0;
-}
+//     while ((line = get_next_line(fd)))
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+//     close(fd);
+//     return 0;
+// }
