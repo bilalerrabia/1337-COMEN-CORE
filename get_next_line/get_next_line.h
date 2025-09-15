@@ -10,6 +10,5 @@ char *get_next_line(int fd);
 int ft_strlen(const char *str);
 int is_not_there(char *str, char c);
 char *ft_strjoin(char *s1, char const *s2);
-char *ft_substr(char const *s, unsigned int start, int len);
 
 #endif
