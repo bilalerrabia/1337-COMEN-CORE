@@ -1,78 +1,98 @@
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "get_next_line.h"
 
-#define BUF_SIZE 255
-
-void ft_strncpy(char *dst, char *src, int n)
+char *get_line(char *remainder)
 {
-    int j = 0;
-    while (j < n)
+    char *line;
+    int i;
+
+    if (!remainder || !*remainder)
+    return (NULL);
+    i = 0;
+    line = malloc(ft_strlen(remainder) + 1);
+    while (remainder[i] && remainder[i] != '\n')
     {
-        dst[j] = src[j];
-        j++;
+        line[i] = remainder[i];
+        i++;
     }
-    dst[j] = '\0';
+    if (remainder[i] == '\n')
+    {
+        line[i] = '\n';
+        line[i + 1] = '\0';
+    }
+    else
+    {
+        line[i] = '\0';
+    }
+    return (line);
 }
 
-int ft_realloc(char **buff, int i, int *max_size)
+char *keep_next_line(char *remainder)
 {
-    char *tmp = malloc(*max_size + 10);
-    if (!tmp)
-        return (0);
-    ft_strncpy(tmp, *buff, i);
-    free(*buff);
-    *buff = tmp;
-    *max_size += 10;
-    return (1);
+    char *new_rem;
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while (remainder[i] && remainder[i] != '\n')
+        i++;
+    if (!remainder[i])
+    {
+        free(remainder);
+        return (NULL);
+    }
+    i++;
+    new_rem = malloc(ft_strlen(remainder) - i + 1);
+    while (remainder[i])
+    {
+        new_rem[j] = remainder[i];
+        i++;
+        j++;
+    }
+    new_rem[j] = '\0';
+    free(remainder);
+    return (new_rem);
 }
 
 char *get_next_line(int fd)
 {
-    int i = 0;
-    char tmp;
-    int max_size = BUF_SIZE;
-    int r;
+    static char *remainder;
+    char *buff;
+    char *line;
+    int bytes;
 
-    char *buff = malloc(BUF_SIZE + 1);
-    if (!buff)
-        return (NULL);
-
-    while ((r = read(fd, &tmp, 1)) == 1 && tmp != '\n')
+    buff = malloc(BUFFER_SIZE + 1);
+    bytes = 1;
+    while (bytes > 0  && is_not_there(remainder, '\n'))
     {
-        if (i >= max_size - 1) // keep space for '\0'
+        bytes = read(fd, buff, BUFFER_SIZE);
+        if (bytes < 0)
         {
-            if (ft_realloc(&buff, i, &max_size) == 0)
-                return NULL;
+            free(buff);
+            return (NULL);
         }
-        buff[i++] = tmp;
+        buff[bytes] = '\0';
+        remainder = ft_strjoin(remainder, buff);
     }
-
-    if (r == 0 && i == 0) // EOF and nothing read
-    {
-        free(buff);
-        return NULL;
-    }
-
-    buff[i] = '\0';  // terminate string
-
-    return (buff);
+    free(buff);
+    if (!remainder)
+        return (NULL);
+    line = get_line(remainder);
+    remainder = keep_next_line(remainder);
+    return (line);
 }
+#include <stdio.h>
 
 int main(void)
 {
     int fd = open("f.txt", O_RDONLY);
-    if (fd < 0)
-        return 1;
-
     char *line;
+
     while ((line = get_next_line(fd)))
     {
-        puts(line);
+        printf("%s", line);
         free(line);
     }
-
     close(fd);
     return 0;
 }
