@@ -40,3 +40,30 @@ int ft_puthex_upper(unsigned int nbr)
     return (ret);
 }
 
+int ft_putbin(unsigned int n)
+{
+    char buffer[32];
+    int i = 0;
+    int count = 0;
+
+    if (n == 0)
+        return (write(1, "0", 1));
+    while (n > 0)
+    {
+        buffer[i++] = (n % 2) + '0';
+        n /= 2;
+    }
+    while (--i >= 0)
+        count += write(1, &buffer[i], 1);
+    return (count);
+}
+
+int ft_putdate(time_t t)
+{
+    struct tm *tm_info;
+    char buffer[20];
+
+    tm_info = localtime(&t);
+    int len = strftime(buffer, sizeof(buffer), "%Y-%m-%d", tm_info);
+    return write(1, buffer, len);
+}

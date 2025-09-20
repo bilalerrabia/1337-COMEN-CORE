@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <time.h>
 
 int ft_printf(char *str, ...);
 int ft_putchar(char car);

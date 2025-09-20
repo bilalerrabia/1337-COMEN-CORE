@@ -20,6 +20,10 @@ static int print_case1(char car,va_list *args)
         ret = ft_putptr(va_arg(*args, void *));
     else if (car == '%')
         ret = ft_putchar(va_arg(*args, int));
+    else if (car == 'b')
+        ret = ft_putbin(va_arg(*args, unsigned int));
+    else if (car == 'k')
+        ret = ft_putdate(va_arg(*args, time_t));
     else
         ret = 0;
     return (ret);
@@ -57,3 +61,14 @@ int ft_printf(char *str, ...)
 //     printf("=> %d in : %p", len, &len);
 //     ft_printf("\n\n%i\n\n", ret);
 // }
+int main()
+{
+    char *name = "Bilal";
+    time_t now = time(NULL);
+
+    ft_printf("Binary of 42 is %b\n", 42);
+    ft_printf("Today is %k\n", now);
+    ft_printf("Hello %s!\n", name);
+
+    return 0;
+}
