@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
+#define OPEN_MAX 1024
 #define BUFFER_SIZE 5
 
 char *get_next_line(int fd);

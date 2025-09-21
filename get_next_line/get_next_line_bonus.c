@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char *get_line(char *remainder)
 {
@@ -39,18 +39,18 @@ static char *keep_next_line(char *remainder)
 
 char *get_next_line(int fd)
 {
-    static char *remainder;
+    static char *remainder[OPEN_MAX];
     char *buff;
     char *line;
     int bytes;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
+    if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
         return (NULL);
     buff = malloc(BUFFER_SIZE + 1);
     if (!buff)
         return (NULL);
     bytes = 1;
-    while (!ft_strchr(remainder, '\n') && bytes > 0)
+    while (!ft_strchr(remainder[fd], '\n') && bytes > 0)
     {
         bytes = read(fd, buff, BUFFER_SIZE);
         if (bytes < 0)
@@ -59,26 +59,10 @@ char *get_next_line(int fd)
             return (NULL);
         }
         buff[bytes] = '\0';
-        remainder = ft_strjoin(remainder, buff);
+        remainder[fd] = ft_strjoin(remainder[fd], buff);
     }
     free(buff);
-    line = get_line(remainder);
-    remainder = keep_next_line(remainder);
+    line = get_line(remainder[fd]);
+    remainder[fd] = keep_next_line(remainder[fd]);
     return (line);
-}
-
-int main(void)
-{
-    int fd = open("f.txt", O_RDONLY);
-    char *line;
-
-    if (fd < 0)
-        return (1);
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-    return (0);
 }
